@@ -5,7 +5,7 @@ const path = require('path');
 const router = express.Router();
 
 router.get('/notes', (req, res) => {
-  fs.readFile('db.json', 'utf8', (err, data) => {
+  fs.readFile(path.join(__dirname, '../db.json'), 'utf8', (err, data) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: 'An error occurred while reading the notes.' });
@@ -22,7 +22,7 @@ router.post('/notes', (req, res) => {
     return res.status(400).json({ error: 'Note title and text are required.' });
   }
 
-  fs.readFile('db.json', 'utf8', (err, data) => {
+  fs.readFile(path.join(__dirname, '../db.json'), 'utf8', (err, data) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: 'An error occurred while reading the notes.' });
@@ -35,7 +35,7 @@ router.post('/notes', (req, res) => {
     };
     notes.push(newNote);
 
-    fs.writeFile('db.json', JSON.stringify(notes), (err) => {
+    fs.writeFile(path.join(__dirname, '../db.json'), JSON.stringify(notes), (err) => {
       if (err) {
         console.error(err);
         return res.status(500).json({ error: 'An error occurred while saving the note.' });
